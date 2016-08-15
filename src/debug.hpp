@@ -1,13 +1,13 @@
 #ifndef _DEBUG_H_
 #define _DEBUG_H_
 
-#include <stdio.h>  /* for perror */
+#include <cstdio>  /* for perror */
 
 #ifndef DEBUG
 //#define DEBUG
 #endif
 
-#define debug_level (DEBUG_ERRS | DEBUG_CUCKOO) 
+#define debug_level (DEBUG_ERRS | DEBUG_CUCKOO)
 
 #ifdef DEBUG
 //extern unsigned int debug;

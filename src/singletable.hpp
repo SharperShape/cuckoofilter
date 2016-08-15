@@ -4,11 +4,11 @@
 
 #include <sstream>
 #include <xmmintrin.h>
-#include <assert.h>
+#include <cassert>
 
-#include "printutil.h"
-#include "bitsutil.h"
-#include "debug.h"
+#include "printutil.hpp"
+#include "bitsutil.hpp"
+#include "debug.hpp"
 
 
 namespace cuckoofilter {

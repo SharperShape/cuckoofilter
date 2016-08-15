@@ -2,18 +2,18 @@
 #ifndef _PERM_ENCODING_H_
 #define _PERM_ENCODING_H_
 
-#include "debug.h"
-
 #include <iostream>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+
+#include "debug.hpp"
 
 namespace cuckoofilter {
 
     class PermEncoding {
-        
+
         /* unpack one 2-byte number to four 4-bit numbers */
         // inline void unpack(const uint16_t in, const uint8_t out[4]) const {
         //     (*(uint16_t *)out)      = in & 0x0f0f;
@@ -71,14 +71,14 @@ namespace cuckoofilter {
         void  gen_tables(int base, int k, uint8_t dst[4], uint16_t& idx){
             for (int i = base; i < 16; i++) {
                 /* for fast comparison in binary_search in little-endian machine */
-                dst[k] = i;	
+                dst[k] = i;
                 if (k + 1 < 4) {
                     gen_tables(i, k+1, dst, idx);
                 } else {
                     dec_table[idx] =  pack(dst);
                     enc_table[pack(dst)] = idx;
                     if (DEBUG_ENCODE & debug_level) {
-                        printf("enc_table[%04x]=%04x\t%x %x %x %x\n", 
+                        printf("enc_table[%04x]=%04x\t%x %x %x %x\n",
                                pack(dst), idx, dst[0], dst[1], dst[2], dst[3]);
                     }
                     idx ++;
@@ -86,5 +86,5 @@ namespace cuckoofilter {
             }
         }
     };
-}  // namespace cuckoofilter 
+}  // namespace cuckoofilter
 #endif // #ifndef _PERM_ENCODING_H_

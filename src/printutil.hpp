@@ -3,6 +3,7 @@
 #define _PRINT_H_
 
 #include <string>
+
 namespace cuckoofilter {
     class PrintUtil {
 

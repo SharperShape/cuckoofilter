@@ -4,8 +4,8 @@
 
 #include <sys/types.h>
 #include <string>
-#include <stdlib.h>
-#include <stdint.h>
+#include <cstdlib>
+#include <cstdint>
 #include <openssl/evp.h>
 
 

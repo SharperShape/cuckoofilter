@@ -1,7 +1,7 @@
 /* -*- Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 #include <iostream>
-#include <stdio.h>
-#include "printutil.h"
+#include <cstdio>
+#include "printutil.hpp"
 
 namespace cuckoofilter {
 

@@ -2,11 +2,11 @@
 #ifndef _CUCKOO_FILTER_H_
 #define _CUCKOO_FILTER_H_
 
-#include "debug.h"
-#include "hashutil.h"
-#include "packedtable.h"
-#include "printutil.h"
-#include "singletable.h"
+#include "debug.hpp"
+#include "hashutil.hpp"
+#include "packedtable.hpp"
+#include "printutil.hpp"
+#include "singletable.hpp"
 
 #include <cassert>
 
@@ -28,7 +28,7 @@ namespace cuckoofilter {
     //   ItemType:  the type of item you want to insert
     //   bits_per_item: how many bits each item is hashed into
     //   TableType: the storage of table, SingleTable by default, and
-    // PackedTable to enable semi-sorting 
+    // PackedTable to enable semi-sorting
     template <typename ItemType,
               size_t bits_per_item,
               template<size_t> class TableType = SingleTable>
@@ -186,7 +186,7 @@ namespace cuckoofilter {
 
         assert(i1 == AltIndex(i2, tag));
 
-        found = victim_.used && (tag == victim_.tag) && 
+        found = victim_.used && (tag == victim_.tag) &&
             (i1 == victim_.index || i2 == victim_.index);
 
         if (found || table_->FindTagInBuckets(i1, i2, tag)) {

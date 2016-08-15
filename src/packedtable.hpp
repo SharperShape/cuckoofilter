@@ -2,9 +2,9 @@
 #ifndef _PACKED_TABLE_H_
 #define _PACKED_TABLE_H_
 
-#include "debug.h"
-#include "permencoding.h"
-#include "printutil.h"
+#include "debug.hpp"
+#include "permencoding.hpp"
+#include "printutil.hpp"
 
 #include <sstream>
 
@@ -121,7 +121,7 @@ namespace cuckoofilter {
                 tags[2] = ((bucketbits >> 10) & DIRBITSMASK);
                 tags[3] = ((bucketbits >> 11) & DIRBITSMASK);
             }
-            else if (bits_per_tag == 6) { 
+            else if (bits_per_tag == 6) {
                 // 2 dirbits per tag, 20 bits per bucket
                 p = buckets_ + ((20 * i) >> 3);
                 uint32_t bucketbits = *((uint32_t*) p );
@@ -131,7 +131,7 @@ namespace cuckoofilter {
                 tags[2] = (bucketbits >> (12 + ((i & 1)<< 2)) ) & DIRBITSMASK;
                 tags[3] = (bucketbits >> (14 + ((i & 1)<< 2)) ) & DIRBITSMASK;
             }
-            else if (bits_per_tag == 7) { 
+            else if (bits_per_tag == 7) {
                 // 3 dirbits per tag, 24 bits per bucket
                 p = buckets_ + (i << 1) + i;
                 uint32_t bucketbits = *((uint32_t*) p );
@@ -141,7 +141,7 @@ namespace cuckoofilter {
                 tags[2] = (bucketbits >> 14) & DIRBITSMASK;
                 tags[3] = (bucketbits >> 17) & DIRBITSMASK;
             }
-            else if (bits_per_tag == 8) { 
+            else if (bits_per_tag == 8) {
                 // 4 dirbits per tag, 28 bits per bucket
                 p = buckets_ + ((28 * i) >> 3);
                 uint32_t bucketbits = *((uint32_t*) p );
@@ -151,7 +151,7 @@ namespace cuckoofilter {
                 tags[2] = (bucketbits >> (16 + ((i & 1)<< 2)) ) & DIRBITSMASK;
                 tags[3] = (bucketbits >> (20 + ((i & 1)<< 2)) ) & DIRBITSMASK;
             }
-            else if (bits_per_tag == 9) { 
+            else if (bits_per_tag == 9) {
                 // 5 dirbits per tag, 32 bits per bucket
                 p = buckets_ + (i * 4);
                 uint32_t bucketbits = *((uint32_t*) p );
@@ -189,10 +189,10 @@ namespace cuckoofilter {
             lowbits[1] = ((v>>8) & 0x000f);
             lowbits[3] = ((v>>12) & 0x000f);
 
-            tags[0] |= lowbits[0]; 
-            tags[1] |= lowbits[1]; 
-            tags[2] |= lowbits[2]; 
-            tags[3] |= lowbits[3]; 
+            tags[0] |= lowbits[0];
+            tags[1] |= lowbits[1];
+            tags[2] |= lowbits[2];
+            tags[3] |= lowbits[3];
 
             if (debug_level & DEBUG_TABLE) {
                 PrintTags(tags);
@@ -241,19 +241,19 @@ namespace cuckoofilter {
 
             if (bits_per_bucket == 16) {
                 // 1 dirbits per tag
-                *((uint16_t*) p) = 
+                *((uint16_t*) p) =
                     codeword | (highbits[0] << 8) | (highbits[1] << 9) | (highbits[2] << 10) | (highbits[3] << 11);
             }
             else if (bits_per_bucket == 20) {
                 // 2 dirbits per tag
                 if ((i & 0x0001) == 0) {
                     *((uint32_t*) p) &= 0xfff00000;
-                    *((uint32_t*) p) |= 
+                    *((uint32_t*) p) |=
                         codeword | (highbits[0] << 8) | (highbits[1] << 10) | (highbits[2] << 12) | (highbits[3] << 14);
                 }
                 else {
                     *((uint32_t*) p) &= 0xff00000f;
-                    *((uint32_t*) p) |= 
+                    *((uint32_t*) p) |=
                         (codeword << 4) | (highbits[0] << 12) | (highbits[1] << 14) | (highbits[2] << 16) | (highbits[3] << 18);
                 }
             }
@@ -267,40 +267,40 @@ namespace cuckoofilter {
                 // 4 dirbits per tag
                 if ((i & 0x0001) == 0) {
                     *((uint32_t*) p) &= 0xf0000000;
-                    *((uint32_t*) p) |= 
+                    *((uint32_t*) p) |=
                         codeword | (highbits[0] << 8) | (highbits[1] << 12) | (highbits[2] << 16) | (highbits[3] << 20);
                 }
                 else {
                     *((uint32_t*) p) &= 0x0000000f;
-                    *((uint32_t*) p) |= 
+                    *((uint32_t*) p) |=
                         (codeword << 4) | (highbits[0] << 12) | (highbits[1] << 16) | (highbits[2] << 20) | (highbits[3] << 24);
                 }
             }
             else if (bits_per_bucket == 32) {
                 // 5 dirbits per tag
-                *((uint32_t*) p) = 
+                *((uint32_t*) p) =
                     codeword | (highbits[0] << 8) | (highbits[1] << 13) | (highbits[2] << 18) | (highbits[3] << 23);
                 DPRINTF(DEBUG_TABLE, " new bucketbits=%s\n", PrintUtil::bytes_to_hex((char*) p, 4).c_str());
             }
             else if (bits_per_bucket == 48) {
                 // 9 dirbits per tag
                 *((uint64_t*) p) &= 0xffff000000000000ULL;
-                *((uint64_t*) p) |= 
-                    codeword | 
-                    ((uint64_t) highbits[0] << 8)  | 
-                    ((uint64_t) highbits[1] << 17) | 
-                    ((uint64_t) highbits[2] << 26) | 
+                *((uint64_t*) p) |=
+                    codeword |
+                    ((uint64_t) highbits[0] << 8)  |
+                    ((uint64_t) highbits[1] << 17) |
+                    ((uint64_t) highbits[2] << 26) |
                     ((uint64_t) highbits[3] << 35);
                 DPRINTF(DEBUG_TABLE, " new bucketbits=%s\n", PrintUtil::bytes_to_hex((char*) p, 4).c_str());
 
             }
             else if (bits_per_bucket == 64) {
                 // 13 dirbits per tag
-                *((uint64_t*) p) = 
-                    codeword | 
-                    ((uint64_t) highbits[0] << 8)  | 
-                    ((uint64_t) highbits[1] << 21) | 
-                    ((uint64_t) highbits[2] << 34) | 
+                *((uint64_t*) p) =
+                    codeword |
+                    ((uint64_t) highbits[0] << 8)  |
+                    ((uint64_t) highbits[1] << 21) |
+                    ((uint64_t) highbits[2] << 34) |
                     ((uint64_t) highbits[3] << 47);
             }
             DPRINTF(DEBUG_TABLE, "PackedTable::WriteBucket done\n");
@@ -308,7 +308,7 @@ namespace cuckoofilter {
 
 
 
-        bool FindTagInBuckets(const size_t i1, 
+        bool FindTagInBuckets(const size_t i1,
                               const size_t i2,
                               const uint32_t tag) const {
 //            DPRINTF(DEBUG_TABLE, "PackedTable::FindTagInBucket %zu\n", i);
@@ -333,7 +333,7 @@ namespace cuckoofilter {
             tags1[3] = (bucketbits1 >> 35) & DIRBITSMASK;
             v = perm_.dec_table[(bucketbits1 ) & 0x0fff];
             // the order 0 2 1 3 is not a bug
-            tags1[0] |= (v & 0x000f); 
+            tags1[0] |= (v & 0x000f);
             tags1[2] |= ((v>>4) & 0x000f);
             tags1[1] |= ((v>>8) & 0x000f);
             tags1[3] |= ((v>>12) & 0x000f);
@@ -344,7 +344,7 @@ namespace cuckoofilter {
             tags2[2] = (bucketbits2 >> 26) & DIRBITSMASK;
             tags2[3] = (bucketbits2 >> 35) & DIRBITSMASK;
             v = perm_.dec_table[ (bucketbits2 ) & 0x0fff];
-            tags2[0] |= (v & 0x000f); 
+            tags2[0] |= (v & 0x000f);
             tags2[2] |= ((v>>4) & 0x000f);
             tags2[1] |= ((v>>8) & 0x000f);
             tags2[3] |= ((v>>12) & 0x000f);

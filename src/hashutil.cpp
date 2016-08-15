@@ -1,6 +1,6 @@
 /* -*- Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 // Pulled from lookup3.c by Bob Jenkins
-#include "hashutil.h"
+#include "hashutil.hpp"
 
 #define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
 #define mix(a,b,c)                              \
