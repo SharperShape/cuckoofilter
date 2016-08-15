@@ -62,9 +62,7 @@ namespace cuckoofilter {
                                          size_t* index,
                                          uint32_t* tag) const {
 
-            std::string hashed_key = HashUtil::SHA1Hash((const char*) &item,
-                                                   sizeof(item));
-            uint64_t hv = *((uint64_t*) hashed_key.c_str());
+            uint64_t hv = HashUtil::SpookyHash((const void*) &item, sizeof(item));
 
             *index = IndexHash((uint32_t) (hv >> 32));
             *tag   = TagHash((uint32_t) (hv & 0xFFFFFFFF));

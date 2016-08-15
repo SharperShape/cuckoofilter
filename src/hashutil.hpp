@@ -41,5 +41,3 @@ namespace cuckoofilter {
 }
 
 #endif  // #ifndef _HASHUTIL_H_
-
-
