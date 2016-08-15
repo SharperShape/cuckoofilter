@@ -2,9 +2,7 @@
 #ifndef _HASHUTIL_H_
 #define _HASHUTIL_H_
 
-#include <sys/types.h>
 #include <string>
-#include <cstdlib>
 #include <cstdint>
 
 #include "SpookyV2.hpp"

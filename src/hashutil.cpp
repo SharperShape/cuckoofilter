@@ -119,8 +119,8 @@ namespace cuckoofilter {
 
 #else /* make valgrind happy */
 
-            const u_int8_t  *k8;
-            k8 = (const u_int8_t *)k;
+            const uint8_t  *k8;
+            k8 = (const uint8_t *)k;
             switch(length)
             {
             case 12: c+=k[2]; b+=k[1]; a+=k[0]; break;
@@ -141,8 +141,8 @@ namespace cuckoofilter {
 #endif /* !valgrind */
 
         } else if (HASH_LITTLE_ENDIAN && ((u.i & 0x1) == 0)) {
-            const u_int16_t *k = (const u_int16_t *)buf;         /* read 16-bit chunks */
-            const u_int8_t  *k8;
+            const uint16_t *k = (const uint16_t *)buf;         /* read 16-bit chunks */
+            const uint8_t  *k8;
 
             /*--------------- all but last block: aligned reads and different mixing */
             while (length > 12)
@@ -156,7 +156,7 @@ namespace cuckoofilter {
             }
 
             /*----------------------------- handle the last (probably partial) block */
-            k8 = (const u_int8_t *)k;
+            k8 = (const uint8_t *)k;
             switch(length)
             {
             case 12: c+=k[4]+(((uint32_t)k[5])<<16);
@@ -188,7 +188,7 @@ namespace cuckoofilter {
             }
 
         } else {                        /* need to read the key one byte at a time */
-            const u_int8_t *k = (const u_int8_t *)buf;
+            const uint8_t *k = (const uint8_t *)buf;
 
             /*--------------- all but the last block: affect some 32 bits of (a,b,c) */
             while (length > 12)
