@@ -6,7 +6,7 @@ OPT = -g -ggdb
 
 CFLAGS += -Wall -c -I. -I./include -I/usr/include/ -I./src/ $(OPT)
 
-LDFLAGS+= -Wall -lpthread -lssl -lcrypto
+LDFLAGS+= -Wall -lpthread
 
 LIBOBJECTS = \
 	./src/hashutil.o \
@@ -25,4 +25,3 @@ test: example/test.o $(LIBOBJECTS)
 
 %.o: %.cc ${HEADERS} Makefile
 	$(CC) $(CFLAGS) $< -o $@
-

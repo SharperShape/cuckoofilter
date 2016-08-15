@@ -6,7 +6,6 @@
 #include <string>
 #include <cstdlib>
 #include <cstdint>
-#include <openssl/evp.h>
 
 #include "SpookyV2.hpp"
 
@@ -37,10 +36,6 @@ namespace cuckoofilter {
 
         // Null hash (shift and mask)
         static uint32_t NullHash(const void* buf, size_t length, uint32_t shiftbytes);
-
-        // Wrappers for MD5 and SHA1 hashing using EVP
-        static std::string MD5Hash(const char* inbuf, size_t in_length);
-        static std::string SHA1Hash(const char* inbuf, size_t in_length);
 
     private:
         HashUtil();
