@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <openssl/evp.h>
 
+#include "SpookyV2.hpp"
 
 
 namespace cuckoofilter {
@@ -22,6 +23,8 @@ namespace cuckoofilter {
         // Use idx1 before idx2, when possible. idx1 and idx2 should be initialized to seeds.
         static void BobHash(const void *buf, size_t length, uint32_t *idx1,  uint32_t *idx2);
         static void BobHash(const std::string &s, uint32_t *idx1,  uint32_t *idx2);
+
+        static uint64_t SpookyHash(const void *buf, size_t length, uint64 seed = 0);
 
         // MurmurHash2
         static uint32_t MurmurHash(const void *buf, size_t length, uint32_t seed = 0);

@@ -272,7 +272,7 @@ namespace cuckoofilter {
             }
 
             /*----------------------------- handle the last (probably partial) block */
-            /* 
+            /*
              * "k[2]&0xffffff" actually reads beyond the end of the string, but
              * then masks off the part it's not allowed to read.  Because the
              * string is aligned, the masked-off tail is in the same word as the
@@ -421,6 +421,11 @@ namespace cuckoofilter {
         return BobHash(s.data(), s.length(), idx1, idx2);
     }
 
+
+    uint64_t HashUtil::SpookyHash(const void *buf, size_t length, uint64 seed)
+    {
+        return SpookyHash::Hash64(buf, length, seed);
+    }
 
     //-----------------------------------------------------------------------------
     // MurmurHash2, by Austin Appleby
