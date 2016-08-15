@@ -2,7 +2,6 @@
 #ifndef _PERM_ENCODING_H_
 #define _PERM_ENCODING_H_
 
-#include <iostream>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
