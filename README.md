@@ -22,7 +22,7 @@ A cuckoo filter supports following operations:
 Repository structure
 --------------------
 *  ``src/``: the C++ implementation of cuckoo filter
-*  ``example/test.cc``: an example of using cuckoo filter
+*  ``example/test.cpp``: an example of using cuckoo filter
 
 Usage
 -------
@@ -39,4 +39,4 @@ David G. Andersen <dga@cs.cmu.edu>
 
 Michael Kaminsky <michael.e.kaminsky@intel.com> 
 
-
+Niko Vuokko <niko.vuokko@sharpershape.com>
